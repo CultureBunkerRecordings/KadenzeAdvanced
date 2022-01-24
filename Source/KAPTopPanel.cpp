@@ -24,7 +24,10 @@ KAPTopPanel::KAPTopPanel(NewProjectAudioProcessor* processor)
 	newPreset = std::make_unique<juce::TextButton>();
 	newPreset->setButtonText("New");
 	newPreset->setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-	newPreset->addListener(this);
+	newPreset->onClick = [this] {
+		mPluginProcessor->getPresetManager()->createNewPreset();
+		updatePresetComboBox();
+	};	
 	addAndMakeVisible(*newPreset);
 
 	buttonX += buttonWidth;
@@ -32,7 +35,15 @@ KAPTopPanel::KAPTopPanel(NewProjectAudioProcessor* processor)
 	savePreset = std::make_unique<juce::TextButton>();
 	savePreset->setButtonText("Save");
 	savePreset->setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-	savePreset->addListener(this);
+	savePreset->onClick = [this] {
+		if (mPluginProcessor->getPresetManager()->getIsCurrentPresetSaved()) {
+			mPluginProcessor->getPresetManager()->savePreset();
+		}
+		else {
+			displaySaveAsPopUp();
+		}
+		updatePresetComboBox();
+	};	
 	addAndMakeVisible(*savePreset);
 
 	buttonX += buttonWidth;
@@ -40,7 +51,10 @@ KAPTopPanel::KAPTopPanel(NewProjectAudioProcessor* processor)
 	saveAsPreset = std::make_unique<juce::TextButton>();
 	saveAsPreset->setButtonText("Save as");
 	saveAsPreset->setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-	saveAsPreset->addListener(this);
+	saveAsPreset->onClick = [this] {
+		displaySaveAsPopUp();
+		updatePresetComboBox();
+	};
 	addAndMakeVisible(*saveAsPreset);
 
 	buttonX += buttonWidth;
@@ -51,8 +65,10 @@ KAPTopPanel::KAPTopPanel(NewProjectAudioProcessor* processor)
 	mPresetDisplay = std::make_unique<juce::ComboBox>();
 
 	mPresetDisplay->setBounds(comboBoxX, buttonY, comboBoxWidth, buttonHeight);
-	mPresetDisplay->addListener(this);
-	addAndMakeVisible(*mPresetDisplay);
+	mPresetDisplay->onChange = [this] {
+		mPluginProcessor->getPresetManager()->loadPreset(mPresetDisplay->getSelectedItemIndex());
+	};	
+	addAndMakeVisible(mPresetDisplay.get());
 
 	updatePresetComboBox();
 };
@@ -67,31 +83,6 @@ void KAPTopPanel::paint(juce::Graphics& g)
 	g.drawFittedText("My Crazy Plugin", 0, 0, getWidth() - 10, getHeight(), juce::Justification::centredRight, 1);
 }
 
-
-void KAPTopPanel::buttonClicked(juce::Button* button) 
-{
-	KAPPresetManager* presetManager = mPluginProcessor->getPresetManager();
-
-	if (button == newPreset.get())
-	{
-		presetManager->createNewPreset();
-	}
-	else if (button == savePreset.get())
-	{
-		presetManager->savePreset();
-	}
-	else if (button == saveAsPreset.get())
-	{
-		displaySaveAsPopUp();
-	}
-}
-
-
-void KAPTopPanel::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
-{
-
-}
-
 void KAPTopPanel::displaySaveAsPopUp()
 {
 	KAPPresetManager* presetManager = mPluginProcessor->getPresetManager();
@@ -103,12 +94,10 @@ void KAPTopPanel::displaySaveAsPopUp()
 	window.addButton("Confirm", 1);
 	window.addButton("Cancel", 0);
 
-	if (window.runModalLoop())
-	{
+	if (window.runModalLoop() != 0) {
 		juce::String presetName = window.getTextEditor("presetName")->getText();
 		presetManager->saveAsPreset(presetName);
 	}
-
 };
 
 void KAPTopPanel::updatePresetComboBox()
@@ -117,14 +106,12 @@ void KAPTopPanel::updatePresetComboBox()
 	juce::String presetName = presetManager->getCurrentPresetName();
 
 	mPresetDisplay->clear(juce::dontSendNotification);
-
-	int numPresets = presetManager->getNumberOfPresets();
-
-	for (int i = 0; i < numPresets; i++)
-	{
-		mPresetDisplay->addItem(presetManager->getPresetName(i), i + 1);
-
+	const int numPresets = presetManager->getNumberOfPresets();
+	for (int i = 0; i < numPresets; i++) {
+		mPresetDisplay->addItem(presetManager->getPresetName(i), (i + 1));
 	}
+
+	mPresetDisplay->setText(presetName, juce::dontSendNotification);
 
 
 };

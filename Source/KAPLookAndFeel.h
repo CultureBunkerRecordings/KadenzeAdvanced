@@ -31,8 +31,7 @@ public:
         //buttons
         setColour(juce::TextButton::buttonColourId, Colour1);
         setColour(juce::TextButton::textColourOnId, Colour1);
-        setColour(juce::TextButton::buttonColourId, Colour1);
-        setColour(juce::TextButton::buttonColourId, Colour1);
+        setColour(juce::TextButton::textColourOffId, Colour1);
     };
 
     virtual ~KAPLookAndFeel() {};

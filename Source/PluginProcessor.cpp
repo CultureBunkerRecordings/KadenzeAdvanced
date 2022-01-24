@@ -19,11 +19,11 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
 #endif
         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-    ), parameters(*this, nullptr, "Params", createParam())
+    ), parameters(*this, nullptr, juce::Identifier("KAP"), createParam())
 #endif
 {
     initialiseDSP();
-    mPresetManager = std::make_unique<KAPPresetManager>(KAPPresetManager(this));
+    mPresetManager = std::make_unique<KAPPresetManager>(this);
 }
 
 NewProjectAudioProcessor::~NewProjectAudioProcessor()
@@ -204,18 +204,12 @@ void NewProjectAudioProcessor::setStateInformation (const void* data, int sizeIn
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 
-    std::unique_ptr<juce::XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes);
+    const auto xmlState = getXmlFromBinary(data, sizeInBytes);
 
-    if(xmlState)
-    {
-        forEachXmlChildElement(*xmlState, subChild)
-        {
-            mPresetManager->loadPresetforXml(subChild);
-        }
-    }
-    else
-    {
-        jassertfalse;
+    jassert(xmlState.get() != nullptr);
+
+    for (auto* subchild : xmlState->getChildIterator()) {
+        mPresetManager->loadPresetforXml(subchild);
     }
 }
 

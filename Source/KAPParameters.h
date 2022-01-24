@@ -12,7 +12,7 @@
 
 enum KAPParameter
 {
-	kParameter_inputGain,
+	kParameter_inputGain = 0,
     kParameter_delayTime,
     kParameter_delayFeedback,
     kParameter_delayWetDry,

@@ -10,7 +10,7 @@
 
 #pragma once
 #include<JuceHeader.h>
-#define Preset_File_Extention ".pf"
+static const juce::String Preset_File_Extention = ".pf";
 
 class KAPPresetManager
 {

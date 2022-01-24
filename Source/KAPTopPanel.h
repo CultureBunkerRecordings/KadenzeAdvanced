@@ -13,13 +13,11 @@
 #include <JuceHeader.h>
 #include "PanelBase.h"
 
-class KAPTopPanel : public PanelBase, public juce::Button::Listener, public juce::ComboBox::Listener 
+class KAPTopPanel : public PanelBase 
 {
 public:
     KAPTopPanel(NewProjectAudioProcessor* processor);
     ~KAPTopPanel();
-    void buttonClicked(juce::Button*) override;
-    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     void paint(juce::Graphics& g) override;
 private:

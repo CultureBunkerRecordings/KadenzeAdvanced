@@ -22,6 +22,7 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     setLookAndFeel(mLookAndFeel.get());
     juce::LookAndFeel::setDefaultLookAndFeel(mLookAndFeel.get());
     addAndMakeVisible(*mMainPanel);
+    
 }
 
 NewProjectAudioProcessorEditor::~NewProjectAudioProcessorEditor()

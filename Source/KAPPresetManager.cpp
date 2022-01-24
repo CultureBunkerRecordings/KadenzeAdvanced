@@ -17,17 +17,17 @@ static const juce::String seperator = "\\";
 static const juce::String seporator = "/";
 #endif
 
-KAPPresetManager::KAPPresetManager(juce::AudioProcessor* processor): mProcessor(processor)
+KAPPresetManager::KAPPresetManager(juce::AudioProcessor* processor): misCurrentPresetSaved(false), mCurrentPresetName("Untitled"), mProcessor(processor)
 {
 	const juce::String pluginName = (juce::String)mProcessor->getName();
-	mPresetDirectory = juce::File::getSpecialLocation(juce::File::userDesktopDirectory).getFullPathName() + pluginName;
+	mPresetDirectory = juce::File::getSpecialLocation(juce::File::userDocumentsDirectory).getFullPathName() + seperator + pluginName;
 
 	if (!juce::File(mPresetDirectory).exists())
 	{
 		juce::File(mPresetDirectory).createDirectory();
 
 	}
-
+	storeLocalPresets();
 };
 
 KAPPresetManager::~KAPPresetManager()
@@ -36,31 +36,52 @@ KAPPresetManager::~KAPPresetManager()
 };
 void KAPPresetManager::getXmlForPreset(juce::XmlElement* element)
 {
-	int numParams = mProcessor->getNumParameters();
+	juce::XmlElement* presetName =
+		new juce::XmlElement("preset_name");
 
-	for (int i = 0; i< numParams;i++)
-	{
-		element->setAttribute(mProcessor->getParameterName(i), mProcessor->getParameter(i));
+	presetName->setAttribute("name", mCurrentPresetName);
+
+	element->addChildElement(presetName);
+
+	auto& parameters = mProcessor->getParameters();
+
+	for (int i = 0; i < parameters.size(); i++) {
+
+		juce::AudioProcessorParameterWithID* parameter =
+			(juce::AudioProcessorParameterWithID*)parameters.getUnchecked(i);
+
+		element->setAttribute(parameter->paramID,
+			parameter->getValue());
 	}
 };
 
 void KAPPresetManager::loadPresetforXml(juce::XmlElement* element)
 {
 	mcurrentPresetXml = element;
-	int numParams = mProcessor->getNumParameters();
 
-	for (int i = 0; i < mcurrentPresetXml->getNumAttributes(); i++)
-	{
-		juce::String name = mcurrentPresetXml->getAttributeName(i);
-		float value = mcurrentPresetXml->getDoubleAttribute(name);
+	juce::XmlElement* presetName = element->getChildByName("preset_name");
 
-		for (int j = 0; j < mProcessor->getNumParameters(); j++)
-		{
-			if (mProcessor->getParameterName(j) == name)
-			{
-				mProcessor->setParameterNotifyingHost(j, value);
+	// early return if presetName element is nullptr
+	if (presetName == nullptr) { return; }
+
+	mCurrentPresetName = presetName->getStringAttribute("name", "error");
+
+	/** iterate our XML for attribute name and value */
+	auto& parameters = mProcessor->getParameters();
+
+	for (int i = 0; i < mcurrentPresetXml->getNumAttributes(); i++) {
+
+		const juce::String paramId = mcurrentPresetXml->getAttributeName(i);
+		const float value = mcurrentPresetXml->getDoubleAttribute(paramId);
+
+		for (int j = 0; j < parameters.size(); j++) {
+
+			juce::AudioProcessorParameterWithID* parameter =
+				(juce::AudioProcessorParameterWithID*)parameters.getUnchecked(i);
+
+			if (paramId == parameter->paramID) {
+				parameter->setValueNotifyingHost(value);
 			}
-
 		}
 	}
 }
@@ -78,13 +99,20 @@ juce::String KAPPresetManager::getPresetName(int presetIndex)
 
 void KAPPresetManager::createNewPreset()
 {
-	int numPresets = mProcessor->getNumParameters();
+	auto& parameters = mProcessor->getParameters();
 
-	for (int i = 0; i < numPresets; i++)
-	{
-		mProcessor->setParameterNotifyingHost(i, mProcessor->getParameterDefaultValue(i));
+	for (int i = 0; i < parameters.size(); i++) {
+
+		juce::AudioProcessorParameterWithID* parameter =
+			(juce::AudioProcessorParameterWithID*)parameters.getUnchecked(i);
+
+		const float defaultValue =
+			parameter->getDefaultValue();
+
+		parameter->setValueNotifyingHost(defaultValue);
 	}
 
+	/** update our bool */
 	misCurrentPresetSaved = false;
 	mCurrentPresetName = "Untitled";
 
@@ -104,9 +132,9 @@ void KAPPresetManager::savePreset()
 
 void KAPPresetManager::saveAsPreset(juce::String presetName)
 {
-	juce::File presetFile = juce::File(mPresetDirectory + seperator + presetName);
+	juce::File presetFile = juce::File(mPresetDirectory + seperator + presetName + Preset_File_Extention);
 
-	if (presetFile.exists()) {
+	if (!presetFile.exists()) {
 		presetFile.create();
 	}
 	else {
@@ -133,7 +161,7 @@ void KAPPresetManager::loadPreset(int presetIndex)
 	if (mCurrentLoadedPreset.loadFileAsData(presetBinary)) {
 		misCurrentPresetSaved = true;
 		mCurrentPresetName = getPresetName(presetIndex);
-		mProcessor->setStateInformation(presetBinary.getData(), presetBinary.getSize());
+		mProcessor->setStateInformation(presetBinary.getData(), (int)presetBinary.getSize());
 	}
 
 };
@@ -152,12 +180,12 @@ void KAPPresetManager::storeLocalPresets()
 {
 	mLocalPresets.clear();
 
-	for (juce::DirectoryIterator di(juce::File(mPresetDirectory), false, '*' + (juce::String)Preset_File_Extention,
-		juce::File::TypesOfFileToFind::findFiles); di.next();)
-	{
-		juce::File preset = di.getFile();
-		mLocalPresets.add(preset);
+	for (juce::DirectoryEntry entry : juce::RangedDirectoryIterator(juce::File(mPresetDirectory),
+		false, "*"+Preset_File_Extention,
+		juce::File::findFiles)){
 
+		const juce::File presetFile = entry.getFile();
+		mLocalPresets.add(presetFile);
 	}
 
 
