@@ -80,7 +80,12 @@ KAPTopPanel::~KAPTopPanel()
 void KAPTopPanel::paint(juce::Graphics& g)
 {
 	PanelBase::paint(g);
-	g.drawFittedText("My Crazy Plugin", 0, 0, getWidth() - 10, getHeight(), juce::Justification::centredRight, 1);
+
+	g.setColour(Colour1);
+	g.setFont(Font2);
+
+	const int w = 220;
+	g.drawFittedText("RAWKUS RAWRAY", TopPanelWidth - w - 20, 0, w, getHeight(), juce::Justification::centredRight, 1);
 }
 
 void KAPTopPanel::displaySaveAsPopUp()

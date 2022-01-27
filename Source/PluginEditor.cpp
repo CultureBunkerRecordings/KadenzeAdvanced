@@ -17,6 +17,8 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     // editor's size to whatever you need it to be.
     setSize (MainPanelWidth, MainPanelHeight);
 
+    mBackground = juce::ImageCache::getFromMemory(BinaryData::kadenze_bg_png, BinaryData::kadenze_bg_pngSize);
+
     mMainPanel = std::make_unique<KAPMainPanel>(&audioProcessor);
     mLookAndFeel = std::make_unique<KAPLookAndFeel>();
     setLookAndFeel(mLookAndFeel.get());
@@ -33,12 +35,7 @@ NewProjectAudioProcessorEditor::~NewProjectAudioProcessorEditor()
 //==============================================================================
 void NewProjectAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawImage(mBackground, getLocalBounds().toFloat());
 }
 
 void NewProjectAudioProcessorEditor::resized()

@@ -28,16 +28,18 @@ void KAPFxPanel::paint(juce::Graphics& g)
 {
 	PanelBase::paint(g);
 
+	juce::String label;
+
 	switch(mStyle)
 	{
 		case kFxPanelStyle_Delay:
 		{
-			g.drawFittedText("DELAY", 0, 0, getWidth(), getHeight() * 0.75f, juce::Justification::centred, 1);
+			label = "RAWRAY";
 			break;
 		}
 		case kFxPanelStyle_Chorus:
 		{
-			g.drawFittedText("CHORUS", 0, 0, getWidth(), getHeight() * 0.75f, juce::Justification::centred, 1);
+			label = "RAWKUS";
 			break;
 		}
 		default:
@@ -47,6 +49,10 @@ void KAPFxPanel::paint(juce::Graphics& g)
 			break;
 		}
 	}
+
+	g.setColour(Colour5);
+	g.setFont(Font3);
+	g.drawText(label, 0, 0, getWidth(), 80, juce::Justification::centred);
 
 	for(int i = 0; i<mSliders.size(); i++)
 	{
@@ -68,61 +74,61 @@ void KAPFxPanel::setFxPanelStyle(FxPanelStyle style)
 
 	switch (mStyle)
 	{
-	case kFxPanelStyle_Delay:
-	{
-		KAPParameterSlider* time = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayTime]);
-		time->setBounds(x, y, slider_Size, slider_Size);
-		addAndMakeVisible(time);
-		mSliders.add(time);
+		case kFxPanelStyle_Delay:
+		{
+			KAPParameterSlider* time = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayTime]);
+			time->setBounds(x, y, slider_Size, slider_Size);
+			addAndMakeVisible(time);
+			mSliders.add(time);
 
-		x = x + slider_Size * 2;
+			x = x + slider_Size * 2;
 
-		KAPParameterSlider* feedback = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayFeedback]);
-		feedback->setBounds(x, y, slider_Size, slider_Size);
-		addAndMakeVisible(feedback);
-		mSliders.add(feedback);
+			KAPParameterSlider* feedback = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayFeedback]);
+			feedback->setBounds(x, y, slider_Size, slider_Size);
+			addAndMakeVisible(feedback);
+			mSliders.add(feedback);
 
-		x = x + slider_Size * 2;
+			x = x + slider_Size * 2;
 
-		KAPParameterSlider* wetDry = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayWetDry]);
-		wetDry->setBounds(x, y, slider_Size, slider_Size);
-		addAndMakeVisible(wetDry);
-		mSliders.add(wetDry);
-		break;
-	}
-
-
-	case kFxPanelStyle_Chorus:
-	{
-		KAPParameterSlider* rate = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_modRate]);
-		rate->setBounds(x, y, slider_Size, slider_Size);
-		addAndMakeVisible(rate);
-		mSliders.add(rate);
-
-		x = x + slider_Size * 2;
-
-		KAPParameterSlider* depth = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_modDepth]);
-		depth->setBounds(x, y, slider_Size, slider_Size);
-		addAndMakeVisible(depth);
-		mSliders.add(depth);
-
-		x = x + slider_Size * 2;
-
-		KAPParameterSlider* wetDry = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayWetDry]);
-		wetDry->setBounds(x, y, slider_Size, slider_Size);
-		addAndMakeVisible(wetDry);
-		mSliders.add(wetDry);
-
-		break;
-	}
+			KAPParameterSlider* wetDry = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayWetDry]);
+			wetDry->setBounds(x, y, slider_Size, slider_Size);
+			addAndMakeVisible(wetDry);
+			mSliders.add(wetDry);
+			break;
+		}
 
 
+		case kFxPanelStyle_Chorus:
+		{
+			KAPParameterSlider* rate = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_modRate]);
+			rate->setBounds(x, y, slider_Size, slider_Size);
+			addAndMakeVisible(rate);
+			mSliders.add(rate);
 
-	case kFxPanelStyleTotalNumStyles:
-	{
-		jassertfalse;
-		break;
-	}
+			x = x + slider_Size * 2;
+
+			KAPParameterSlider* depth = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_modDepth]);
+			depth->setBounds(x, y, slider_Size, slider_Size);
+			addAndMakeVisible(depth);
+			mSliders.add(depth);
+
+			x = x + slider_Size * 2;
+
+			KAPParameterSlider* wetDry = new KAPParameterSlider(mPluginProcessor->parameters, KAPParameterID[kParameter_delayWetDry]);
+			wetDry->setBounds(x, y, slider_Size, slider_Size);
+			addAndMakeVisible(wetDry);
+			mSliders.add(wetDry);
+
+			break;
+		}
+
+
+
+		case kFxPanelStyleTotalNumStyles:
+		{
+			jassertfalse;
+			break;
+		}
 
 	}
 }

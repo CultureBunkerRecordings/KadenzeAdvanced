@@ -23,8 +23,5 @@ PanelBase::~PanelBase()
 
 void PanelBase::paint(juce::Graphics& g)
 {
-    g.setColour(juce::Colours::whitesmoke);
-    g.fillAll();
-    g.setColour(juce::Colours::black);
-    g.drawRect(0, 0, getWidth(), getHeight(), 2);
+    
 };

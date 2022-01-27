@@ -13,6 +13,7 @@
 #include "PanelBase.h"
 #include "KAPParameterSlider.h"
 #include "KAPUIHelperFunctions.h"
+#include "VUMeter.h"
 
 class KAPGainPanel : public PanelBase 
 {
@@ -23,5 +24,5 @@ public:
     void paint(juce::Graphics& g) override;
 private:
     KAPParameterSlider* mParameterSlider;
-
+    std::unique_ptr<VUMeter> mVUmeter;
 };

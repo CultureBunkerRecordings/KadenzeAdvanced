@@ -61,6 +61,10 @@ public:
     juce::AudioProcessorValueTreeState::ParameterLayout createParam();
 	juce::AudioProcessorValueTreeState parameters;
 
+    float getMeterInputLevel(int channel);
+
+    float getMeterOutputLevel(int channel);
+
     KAPPresetManager* getPresetManager()
     {
         return mPresetManager.get();

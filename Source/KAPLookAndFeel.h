@@ -52,6 +52,9 @@ public:
         } else if (shouldDrawButtonAsHighlighted) {
             fillColour = Colour3;
         }
+        else {
+            fillColour = Colour5;
+        }
 
         const float cornerSize = 6.0f;
         juce::Rectangle<float> bounds = button.getLocalBounds().toFloat().reduced(0.5, 0.5);

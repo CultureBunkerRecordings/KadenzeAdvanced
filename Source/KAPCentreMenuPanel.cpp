@@ -20,8 +20,8 @@ KAPCentreMenuPanel::KAPCentreMenuPanel(NewProjectAudioProcessor* processor)
 
 	mFxTypeComboBox = std::make_unique<KAPParameterComboBox>(mPluginProcessor->parameters, KAPParameterID[kParameter_delayType]);
 	mFxTypeComboBox->setBounds(getWidth() - width, 0, width, getHeight());
-	mFxTypeComboBox->addItem("Delay", 1);
-	mFxTypeComboBox->addItem("Chorus", 2);
+	mFxTypeComboBox->addItem("RAWRAY", 1);
+	mFxTypeComboBox->addItem("RAWKUS", 2);
 	mFxTypeComboBox->setSelectedItemIndex(static_cast<int>(mPluginProcessor->getParameter(kParameter_delayType)), juce::dontSendNotification);
 
 	addAndMakeVisible(*mFxTypeComboBox);

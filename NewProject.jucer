@@ -2,8 +2,13 @@
 
 <JUCERPROJECT id="EnCZRE" name="KadenzeAdvancedPlugin" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
-              jucerFormatVersion="1">
+              jucerFormatVersion="1" companyName="CultureBunkerRecordings"
+              pluginName="RAWKUS/RAWRAY" pluginDesc="Chorus/Delay">
   <MAINGROUP id="drTQvw" name="KadenzeAdvancedPlugin">
+    <GROUP id="{20CA8E85-90B0-F004-70C6-07BADD224CE0}" name="Components">
+      <FILE id="AO29kv" name="VUMeter.cpp" compile="1" resource="0" file="Source/VUMeter.cpp"/>
+      <FILE id="cO2kmc" name="VUMeter.h" compile="0" resource="0" file="Source/VUMeter.h"/>
+    </GROUP>
     <GROUP id="{E5E1386E-9C3D-16D2-EBE7-9EE0E031B68D}" name="Managers">
       <FILE id="mqTGcD" name="KAPPresetManager.cpp" compile="1" resource="0"
             file="Source/KAPPresetManager.cpp"/>

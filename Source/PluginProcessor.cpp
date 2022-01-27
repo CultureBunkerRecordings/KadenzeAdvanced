@@ -195,7 +195,7 @@ void NewProjectAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 
     mPresetManager->getXmlForPreset(presetBody);
     preset.addChildElement(presetBody);
-    copyXmlToBinary(*presetBody, destData);
+    copyXmlToBinary(preset, destData);
 
 }
 
@@ -232,6 +232,18 @@ juce::AudioProcessorValueTreeState::ParameterLayout NewProjectAudioProcessor::cr
         params.push_back(std::make_unique<juce::AudioParameterFloat>(KAPParameterID[i], KAPParameterID[i], juce::NormalisableRange<float>(0.0f, 1.0f), 0.5));
     }
     return { params.begin(), params.end() };
+}
+
+float NewProjectAudioProcessor::getMeterInputLevel(int channel) 
+{
+    float normalisedDb = dbToNormalisedGain(pInputGain[channel]->getMeterLevel());
+    return normalisedDb;
+}
+
+float NewProjectAudioProcessor::getMeterOutputLevel(int channel)
+{
+    float normalisedDb = dbToNormalisedGain(pOutputGain[channel]->getMeterLevel());
+    return normalisedDb;
 }
 
 

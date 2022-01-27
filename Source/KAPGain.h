@@ -16,6 +16,8 @@ public:
     KAPGain();
     ~KAPGain();
     void process(float* audioIn, float gain, float* audioOut, int numSamplesToRender);
+    float getMeterLevel();
 private:
+    float mOutputSmoothed;
 
 };

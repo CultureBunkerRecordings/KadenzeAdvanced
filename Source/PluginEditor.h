@@ -33,5 +33,7 @@ private:
     std::unique_ptr<KAPMainPanel> mMainPanel;
     std::unique_ptr<KAPLookAndFeel> mLookAndFeel;
 
+    juce::Image mBackground;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewProjectAudioProcessorEditor)
 };
