@@ -18,7 +18,6 @@ PanelBase::PanelBase(NewProjectAudioProcessor* processor) : mPluginProcessor(pro
 
 PanelBase::~PanelBase()
 {
-	
 };
 
 void PanelBase::paint(juce::Graphics& g)

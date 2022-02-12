@@ -25,4 +25,6 @@ public:
 private:
     KAPParameterSlider* mParameterSlider;
     std::unique_ptr<VUMeter> mVUmeter;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KAPGainPanel)
 };

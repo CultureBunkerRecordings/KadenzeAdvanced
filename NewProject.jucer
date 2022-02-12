@@ -3,7 +3,7 @@
 <JUCERPROJECT id="EnCZRE" name="KadenzeAdvancedPlugin" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
               jucerFormatVersion="1" companyName="CultureBunkerRecordings"
-              pluginName="RAWKUS/RAWRAY" pluginDesc="Chorus/Delay">
+              pluginName="RAWKUS/RAWRAY" pluginDesc="Chorus/Delay" pluginFormats="buildAU,buildAUv3,buildStandalone,buildVST,buildVST3">
   <MAINGROUP id="drTQvw" name="KadenzeAdvancedPlugin">
     <GROUP id="{20CA8E85-90B0-F004-70C6-07BADD224CE0}" name="Components">
       <FILE id="AO29kv" name="VUMeter.cpp" compile="1" resource="0" file="Source/VUMeter.cpp"/>
@@ -75,6 +75,7 @@
       <FILE id="y6XI4g" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{C8E8B58C-59CB-8465-4E6E-437DD7DEEDA9}" name="Assets">
+      <FILE id="mZek4i" name="Higher Jump.ttf" compile="0" resource="1" file="Assets/higher-jump/Higher Jump.ttf"/>
       <FILE id="RnLou3" name="kadenze_bg.png" compile="0" resource="1" file="Assets/kadenze_bg.png"/>
       <FILE id="ZJP6FT" name="kadenze_knob.png" compile="0" resource="1"
             file="Assets/kadenze_knob.png"/>

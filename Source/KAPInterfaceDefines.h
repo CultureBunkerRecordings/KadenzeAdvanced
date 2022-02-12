@@ -29,6 +29,7 @@
 #define FXPanelWidth CentrePanelWidth
 #define FXPanelHeight CentrePanelHeight - CentreMenuPanelHeight
 
+
 const juce::Colour Colour1 = juce::Colour(105, 105, 105);
 const juce::Colour Colour2 = juce::Colour(0, 0, 0).withAlpha(0.0f);
 const juce::Colour Colour3 = juce::Colour(0, 0, 0).withAlpha(0.3f);
@@ -40,3 +41,4 @@ const juce::Colour Colour7 = juce::Colour(125, 125, 125);
 const juce::Font Font1("Helvetica Neue", 12.0f, juce::Font::bold);
 const juce::Font Font2("Helvetica Neue", 22.0f, juce::Font::bold);
 const juce::Font Font3("Helvetica Neue", 48.0f, juce::Font::bold);
+

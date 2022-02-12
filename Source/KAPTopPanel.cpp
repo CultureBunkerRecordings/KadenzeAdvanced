@@ -16,6 +16,10 @@ KAPTopPanel::KAPTopPanel(NewProjectAudioProcessor* processor)
 {
 	setSize(TopPanelWidth, TopPanelHeight);
 
+	tf = juce::Typeface::createSystemTypefaceFor(BinaryData::Higher_Jump_ttf, BinaryData::Higher_Jump_ttfSize);
+	myFont = juce::Font(tf);
+	myFont.setHeight(30.0f);
+
 	int buttonX = 15;
 	const int buttonY = 10;
 	const int buttonWidth = 55;
@@ -82,7 +86,7 @@ void KAPTopPanel::paint(juce::Graphics& g)
 	PanelBase::paint(g);
 
 	g.setColour(Colour1);
-	g.setFont(Font2);
+	g.setFont(myFont);
 
 	const int w = 220;
 	g.drawFittedText("RAWKUS RAWRAY", TopPanelWidth - w - 20, 0, w, getHeight(), juce::Justification::centredRight, 1);

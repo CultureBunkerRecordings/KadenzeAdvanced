@@ -32,6 +32,6 @@ public:
 private:
     FxPanelStyle mStyle;
     juce::OwnedArray<KAPParameterSlider> mSliders;
-
-
+    juce::Typeface::Ptr tf;
+    juce::Font myFont;
 };

@@ -30,3 +30,4 @@ inline void paintComponentLabel(juce::Graphics& g, juce::Component* inComponent)
     g.drawFittedText(label, x, y, w, h, juce::Justification::centred, 1);
 
 }
+

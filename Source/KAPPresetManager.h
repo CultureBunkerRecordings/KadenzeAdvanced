@@ -44,4 +44,6 @@ private:
     juce::XmlElement* mcurrentPresetXml;
     juce::AudioProcessor* mProcessor;
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KAPPresetManager)
+
 };

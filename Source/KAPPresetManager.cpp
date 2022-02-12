@@ -32,7 +32,8 @@ KAPPresetManager::KAPPresetManager(juce::AudioProcessor* processor): misCurrentP
 
 KAPPresetManager::~KAPPresetManager()
 {
-	
+	mcurrentPresetXml = nullptr;
+	delete(mcurrentPresetXml);
 };
 void KAPPresetManager::getXmlForPreset(juce::XmlElement* element)
 {

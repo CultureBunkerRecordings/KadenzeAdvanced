@@ -35,5 +35,4 @@ KAPMainPanel::KAPMainPanel(NewProjectAudioProcessor* processor) : PanelBase(proc
 
 KAPMainPanel::~KAPMainPanel()
 {
-	
 };

@@ -26,4 +26,8 @@ private:
 
     std::unique_ptr<juce::ComboBox> mPresetDisplay;
     std::unique_ptr<juce::TextButton> newPreset, savePreset, saveAsPreset;
+    juce::Typeface::Ptr tf;
+    juce::Font myFont;
+
+
 };
