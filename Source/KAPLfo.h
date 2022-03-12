@@ -25,4 +25,7 @@ private:
     double mSampleRate;
     float mPhase;
     float mBuffer[MaxBufferSize];
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KAPLfo)
+
 };

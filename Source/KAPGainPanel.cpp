@@ -39,5 +39,5 @@ void KAPGainPanel::setParameterID(int parameterID)
 void KAPGainPanel::paint(juce::Graphics& g)
 {
 	PanelBase::paint(g);
-	paintComponentLabel(g, mParameterSlider);
+	//paintComponentLabel(g, mParameterSlider);
 }

@@ -16,21 +16,21 @@ KAPMainPanel::KAPMainPanel(NewProjectAudioProcessor* processor) : PanelBase(proc
 	setSize(MainPanelWidth, MainPanelHeight);
     mTopPanel = std::make_unique<KAPTopPanel>(processor);
     mTopPanel->setTopLeftPosition(0, 0);
-    addAndMakeVisible(*mTopPanel);
+    addAndMakeVisible(mTopPanel.get());
 
     mGainPanelIn = std::make_unique<KAPGainPanel>(processor);
     mGainPanelIn->setTopLeftPosition(0, TopPanelHeight);
     mGainPanelIn->setParameterID(kParameter_inputGain);
-    addAndMakeVisible(*mGainPanelIn);
+    addAndMakeVisible(mGainPanelIn.get());
 
     mGainPanelOut = std::make_unique<KAPGainPanel>(processor);
     mGainPanelOut->setTopLeftPosition(MainPanelWidth - GainPanelWidth, TopPanelHeight);
     mGainPanelOut->setParameterID(kParameter_outputGain);
-    addAndMakeVisible(*mGainPanelOut);
+    addAndMakeVisible(mGainPanelOut.get());
 
     mCentrePanel = std::make_unique<KAPCentrePanel>(processor);
     mCentrePanel->setTopLeftPosition(GainPanelWidth, TopPanelHeight);
-    addAndMakeVisible(*mCentrePanel);
+    addAndMakeVisible(mCentrePanel.get());
 }
 
 KAPMainPanel::~KAPMainPanel()

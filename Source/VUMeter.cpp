@@ -15,6 +15,10 @@
 
 VUMeter::VUMeter(NewProjectAudioProcessor* processor): mProcessor(processor), mParameterID(-1), channel0Level(0), channel1Level(0)
 {
+    channel0Level = 0;
+    channel1Level = 0;
+
+    startTimerHz(15);
 }
 
 VUMeter::~VUMeter()
@@ -50,7 +54,7 @@ void VUMeter::paint(juce::Graphics& g)
 void VUMeter::setParameterID(int parameterID) 
 {
     mParameterID = parameterID;
-    startTimerHz(15);
+   
 }
 
 void VUMeter::timerCallback()

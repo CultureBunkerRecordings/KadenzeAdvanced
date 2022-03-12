@@ -29,11 +29,11 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    NewProjectAudioProcessor& audioProcessor;
+    juce::Image mBackground;
     std::unique_ptr<KAPMainPanel> mMainPanel;
     std::unique_ptr<KAPLookAndFeel> mLookAndFeel;
 
-    juce::Image mBackground;
+    NewProjectAudioProcessor& audioProcessor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewProjectAudioProcessorEditor)
 };

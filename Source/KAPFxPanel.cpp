@@ -12,12 +12,12 @@
 #include "KAPUIHelperFunctions.h"
 
 KAPFxPanel::KAPFxPanel(NewProjectAudioProcessor* processor)
-	: PanelBase(processor)
+	: PanelBase(processor), tf(nullptr)
 {
 	setSize(FXPanelWidth, FXPanelHeight);
-	tf = juce::Typeface::createSystemTypefaceFor(BinaryData::Higher_Jump_ttf, BinaryData::Higher_Jump_ttfSize);
+	/*/tf = juce::Typeface::createSystemTypefaceFor(BinaryData::Higher_Jump_ttf, BinaryData::Higher_Jump_ttfSize);
 	myFont = juce::Font(tf);
-	myFont.setHeight(80.0f);
+	myFont.setHeight(80.0f);*/
 
 	FxPanelStyle currentStyle = (FxPanelStyle)mPluginProcessor->getParameter(kParameter_delayType);
 	setFxPanelStyle(currentStyle);
@@ -31,39 +31,16 @@ KAPFxPanel::~KAPFxPanel()
 void KAPFxPanel::paint(juce::Graphics& g)
 {
 	PanelBase::paint(g);
-
-	juce::String label;
-
-	switch(mStyle)
-	{
-		case kFxPanelStyle_Delay:
-		{
-			label = "RAWRAY";
-			break;
-		}
-		case kFxPanelStyle_Chorus:
-		{
-			label = "RAWKUS";
-			break;
-		}
-		default:
-		case kFxPanelStyleTotalNumStyles:
-		{
-			jassertfalse;
-			break;
-		}
-	}
-
+	
 	g.setColour(Colour5);
-	g.setFont(myFont);
-	g.drawText(label, 0, 0, getWidth(), 80, juce::Justification::centred);
+	g.setFont(Font1);
+	g.drawText(mlabel, 0, 0, getWidth(), 80, juce::Justification::centred, false);
 
 	for(int i = 0; i<mSliders.size(); i++)
 	{
 		paintComponentLabel(g, mSliders[i]);
 	}
 
-	repaint();
 }
 
 
@@ -98,7 +75,12 @@ void KAPFxPanel::setFxPanelStyle(FxPanelStyle style)
 			wetDry->setBounds(x, y, slider_Size, slider_Size);
 			addAndMakeVisible(wetDry);
 			mSliders.add(wetDry);
+
+			mlabel = "Delay";
+
 			break;
+
+			
 		}
 
 
@@ -123,7 +105,11 @@ void KAPFxPanel::setFxPanelStyle(FxPanelStyle style)
 			addAndMakeVisible(wetDry);
 			mSliders.add(wetDry);
 
+			mlabel = "Chorus";
+
 			break;
+
+			
 		}
 
 
@@ -137,9 +123,9 @@ void KAPFxPanel::setFxPanelStyle(FxPanelStyle style)
 	}
 }
 
-void KAPFxPanel::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
+/*void KAPFxPanel::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
 {
 	FxPanelStyle style = static_cast<FxPanelStyle>(comboBoxThatHasChanged->getSelectedItemIndex());
 	setFxPanelStyle(style);
-};
+};*/
 

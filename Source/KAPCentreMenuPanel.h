@@ -19,8 +19,8 @@ class KAPCentreMenuPanel : public PanelBase
 public:
     KAPCentreMenuPanel(NewProjectAudioProcessor* processor);
     ~KAPCentreMenuPanel();
-    void addFxTypeComboboxListener(juce::ComboBox::Listener& inListener);
-    void removeFxTypeComboboxListener(juce::ComboBox::Listener& inListener);
+    void addFxTypeComboboxListener(juce::ComboBox::Listener* inListener);
+    void removeFxTypeComboboxListener(juce::ComboBox::Listener* inListener);
 
 private:
     std::unique_ptr<KAPParameterComboBox> mFxTypeComboBox;

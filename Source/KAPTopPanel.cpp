@@ -86,7 +86,7 @@ void KAPTopPanel::paint(juce::Graphics& g)
 	PanelBase::paint(g);
 
 	g.setColour(Colour1);
-	g.setFont(myFont);
+	g.setFont(Font1);
 
 	const int w = 220;
 	g.drawFittedText("RAWKUS RAWRAY", TopPanelWidth - w - 20, 0, w, getHeight(), juce::Justification::centredRight, 1);
