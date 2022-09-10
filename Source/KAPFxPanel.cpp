@@ -15,9 +15,9 @@ KAPFxPanel::KAPFxPanel(NewProjectAudioProcessor* processor)
 	: PanelBase(processor), tf(nullptr)
 {
 	setSize(FXPanelWidth, FXPanelHeight);
-	/*/tf = juce::Typeface::createSystemTypefaceFor(BinaryData::Higher_Jump_ttf, BinaryData::Higher_Jump_ttfSize);
+	tf = juce::Typeface::createSystemTypefaceFor(BinaryData::Higher_Jump_ttf, BinaryData::Higher_Jump_ttfSize);
 	myFont = juce::Font(tf);
-	myFont.setHeight(80.0f);*/
+	myFont.setHeight(80.0f);
 
 	FxPanelStyle currentStyle = (FxPanelStyle)mPluginProcessor->getParameter(kParameter_delayType);
 	setFxPanelStyle(currentStyle);
@@ -33,7 +33,7 @@ void KAPFxPanel::paint(juce::Graphics& g)
 	PanelBase::paint(g);
 	
 	g.setColour(Colour5);
-	g.setFont(Font1);
+	g.setFont(myFont);
 	g.drawText(mlabel, 0, 0, getWidth(), 80, juce::Justification::centred, false);
 
 	for(int i = 0; i<mSliders.size(); i++)
