@@ -35,15 +35,15 @@ void KAPLfo::process(float rate, float depth, int numSamples)
 {
 	float mappedRate = juce::jmap(rate, 0.f, 1.f, 0.01f, 10.0f);
 
-	for(int i = 0; i < numSamples; i ++)
+	for(int i = 0; i < numSamples; i++)
 	{
-		mPhase = mPhase + mappedRate / mSampleRate;
-		if (mPhase > 1)
+		mPhase = mPhase + (mappedRate / mSampleRate);
+		if (mPhase > 1.0f)
 		{
-			mPhase -= 1;
+			mPhase -= 1.0f;
 		}
 
-		float lfoPos = sin(mPhase * M_PI_2) * depth;
+		const float lfoPos = sinf(mPhase * M_PI_2) * depth;
 		mBuffer[i] = lfoPos;
 	}
 

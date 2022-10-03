@@ -158,17 +158,25 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
+    int prevChannel = 0;
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
 
         pInputGain[channel]->process(channelData, getParameter(kParameter_inputGain), channelData, buffer.getNumSamples());
-
-        float rate = (channel == 0) ? 0 : getParameter(kParameter_modRate);
+        
+        float rate;
+        if (channel != prevChannel) {
+            rate = (channel == 0) ? 0 : getParameter(kParameter_modRate);
+        }
+        else {
+            rate = getParameter(kParameter_modRate);
+        }
 
         pLFO[channel]->process(rate, getParameter(kParameter_modDepth), buffer.getNumSamples());
         pDelay[channel]->process(channelData, getParameter(kParameter_delayTime), getParameter(kParameter_delayFeedback), getParameter(kParameter_delayWetDry), getParameter(kParameter_delayType), pLFO[channel]->getBuffer(), channelData, buffer.getNumSamples());
         pOutputGain[channel]->process(channelData, getParameter(kParameter_outputGain), channelData, buffer.getNumSamples());
+        prevChannel = channel;
     }
 }
 
